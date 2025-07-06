@@ -39,7 +39,7 @@ class OrdersControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    @DisplayName("Retrieve submitted order")
+    @DisplayName("GET /orders/monitor Retrieve submitted order")
     void testGetOrderStatus1() throws Exception {
         PizzaOrderItemDto pizzaOrderItemDto= PizzaOrderItemDto.builder()
                 .pizzaRecipe(new PizzaRecipeDto(TestSamples.pizzaRecipeMargheritaSample()))
@@ -76,7 +76,7 @@ class OrdersControllerTest {
     }
 
     @Test
-    @DisplayName("Retrieve submitted order with invalid code returns ORDER_NOT_FOUND")
+    @DisplayName("GET /orders/monitor  with invalid code returns ORDER_NOT_FOUND")
     void testGetOrderStatus2() throws Exception {
 
         String orderCode = "hello";
@@ -97,7 +97,7 @@ class OrdersControllerTest {
 
 
     @Test
-    @DisplayName("Successfully make new order")
+    @DisplayName("POST /orders/new Successfully make new order")
     void testMakeNewOrder1() throws Exception {
 
         NewPizzaOrderItemDto newPizzaOrderItemDto = new NewPizzaOrderItemDto();
@@ -147,7 +147,7 @@ class OrdersControllerTest {
     }
 
     @Test
-    @DisplayName("Fail making new order with no pizzas")
+    @DisplayName("POST /orders/new Fail making new order with no pizzas")
     void testMakeNewOrder2() throws Exception {
         NewPizzaOrderDto invalidDto = new NewPizzaOrderDto();
         mockMvc.perform(MockMvcRequestBuilders.post("/orders/new")

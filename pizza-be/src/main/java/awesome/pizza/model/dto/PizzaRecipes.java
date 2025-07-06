@@ -11,5 +11,5 @@ import java.util.List;
 @AllArgsConstructor
 public class PizzaRecipes implements Serializable{
 
-    private List<PizzaRecipeDto> pizzaRecipesList= new ArrayList<>();
+    private List<PizzaRecipeDto> pizzaRecipes= new ArrayList<>();
 }

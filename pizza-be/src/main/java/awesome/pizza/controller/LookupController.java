@@ -22,6 +22,4 @@ public class LookupController {
         return new PizzaRecipes(pizzaRecipeService.getAllActiveRecipes());
     }
 
-
-
 }

@@ -8,6 +8,7 @@ import awesome.pizza.model.dto.PizzaOrderResponse;
 import awesome.pizza.model.entities.OrderStatus;
 import awesome.pizza.model.entities.PizzaOrder;
 import awesome.pizza.repository.IPizzaOrderRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class RestaurantService {
 
     private final IPizzaOrderRepository orderRepository;

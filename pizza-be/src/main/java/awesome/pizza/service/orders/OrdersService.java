@@ -63,7 +63,4 @@ public class OrdersService {
     }
 
 
-    public double computePizzaPrice(PizzaRecipe pizzaRecipe) {
-        return pizzaRecipe.getDefaultPrice();
-    }
 }

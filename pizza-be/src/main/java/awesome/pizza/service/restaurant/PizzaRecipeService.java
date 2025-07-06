@@ -3,6 +3,7 @@ package awesome.pizza.service.restaurant;
 import awesome.pizza.model.dto.PizzaRecipeDto;
 import awesome.pizza.model.entities.PizzaRecipe;
 import awesome.pizza.repository.IPizzaRecipeRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class PizzaRecipeService {
 
     private  final IPizzaRecipeRepository pizzaRecipeRepository;
@@ -21,6 +23,7 @@ public class PizzaRecipeService {
                 .sorted(Comparator.comparing(PizzaRecipeDto::getName))
                 .toList();
     }
+
 
 
     public PizzaRecipeDto newPizzaRecipe(PizzaRecipeDto pizzaRecipeDto) {
