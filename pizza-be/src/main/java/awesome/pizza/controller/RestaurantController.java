@@ -1,7 +1,8 @@
 package awesome.pizza.controller;
 
-import awesome.pizza.model.dto.OrderResponseStatus;
-import awesome.pizza.model.dto.OrderStatusDto;
+import awesome.pizza.model.dto.AwesomePizzaResponseStatus;
+import awesome.pizza.model.dto.PizzaOrderDto;
+import awesome.pizza.model.dto.PizzaOrderResponse;
 import awesome.pizza.service.RestaurantService;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -17,26 +18,26 @@ public class RestaurantController {
 
     @GetMapping(value = "/next", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public OrderStatusDto nextOrder() {
+    public PizzaOrderResponse nextOrder() {
         return restaurantService.getNextOrder().map(
-                order -> OrderStatusDto.builder()
-                        .pizzaOrder(order)
-                        .orderResponseStatus(OrderResponseStatus.OK)
+                order -> PizzaOrderResponse.builder()
+                        .pizzaOrder(new PizzaOrderDto(order))
+                        .responseStatus(AwesomePizzaResponseStatus.OK)
                         .build()
-        ).orElse(OrderStatusDto.builder()
-                .orderResponseStatus(OrderResponseStatus.EMPTY_QUEUE)
+        ).orElse(PizzaOrderResponse.builder()
+                .responseStatus(AwesomePizzaResponseStatus.EMPTY_QUEUE)
                 .build());
     }
 
     @PostMapping(value = "/accept/{orderId}", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public OrderStatusDto acceptOrder(@NotNull @PathVariable Long orderId) {
+    public PizzaOrderResponse acceptOrder(@NotNull @PathVariable Long orderId) {
         return restaurantService.acceptOrder(orderId);
     }
 
     @PostMapping(value = "/refuse/{orderId}", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public OrderStatusDto refuseOrder(@NotNull @PathVariable Long orderId) {
+    public PizzaOrderResponse refuseOrder(@NotNull @PathVariable Long orderId) {
         return restaurantService.refuseOrder(orderId);
     }
 

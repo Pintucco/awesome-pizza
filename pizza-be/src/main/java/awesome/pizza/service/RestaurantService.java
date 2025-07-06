@@ -2,11 +2,12 @@ package awesome.pizza.service;
 
 import awesome.pizza.config.AwesomePizzaException;
 import awesome.pizza.config.ErrorEnum;
-import awesome.pizza.model.dto.OrderResponseStatus;
-import awesome.pizza.model.dto.OrderStatusDto;
+import awesome.pizza.model.dto.AwesomePizzaResponseStatus;
+import awesome.pizza.model.dto.PizzaOrderDto;
+import awesome.pizza.model.dto.PizzaOrderResponse;
 import awesome.pizza.model.entities.OrderStatus;
 import awesome.pizza.model.entities.PizzaOrder;
-import awesome.pizza.repository.IOrderRepository;
+import awesome.pizza.repository.IPizzaOrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +18,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RestaurantService {
 
-    private final IOrderRepository orderRepository;
+    private final IPizzaOrderRepository orderRepository;
 
     public Optional<PizzaOrder> getNextOrder() {
         return orderRepository.findByOrderStatus(OrderStatus.SUBMITTED).stream()
                 .min(Comparator.comparing(PizzaOrder::getId));
     }
 
-    public OrderStatusDto acceptOrder(Long orderId) {
+    public PizzaOrderResponse acceptOrder(Long orderId) {
         PizzaOrder pizzaOrder = orderRepository.findById(orderId)
                 .orElseThrow(() -> new AwesomePizzaException(ErrorEnum.ORDER_NOT_FOUND));
         if (!pizzaOrder.getOrderStatus().equals(OrderStatus.SUBMITTED)) {
@@ -32,13 +33,13 @@ public class RestaurantService {
         }
         pizzaOrder.setOrderStatus(OrderStatus.PIZZA_IN_PROGRESS);
         PizzaOrder updatedPizzaOrder = orderRepository.save(pizzaOrder);
-        return OrderStatusDto.builder()
-                .pizzaOrder(updatedPizzaOrder)
-                .orderResponseStatus(OrderResponseStatus.OK)
+        return PizzaOrderResponse.builder()
+                .pizzaOrder(new PizzaOrderDto(updatedPizzaOrder))
+                .responseStatus(AwesomePizzaResponseStatus.OK)
                 .build();
     }
 
-    public OrderStatusDto refuseOrder(Long orderId) {
+    public PizzaOrderResponse refuseOrder(Long orderId) {
         PizzaOrder pizzaOrder = orderRepository.findById(orderId)
                 .orElseThrow(() -> new AwesomePizzaException(ErrorEnum.ORDER_NOT_FOUND));
         if (!pizzaOrder.getOrderStatus().equals(OrderStatus.SUBMITTED)) {
@@ -46,9 +47,9 @@ public class RestaurantService {
         }
         pizzaOrder.setOrderStatus(OrderStatus.REFUSED);
         PizzaOrder updatedPizzaOrder = orderRepository.save(pizzaOrder);
-        return OrderStatusDto.builder()
-                .pizzaOrder(updatedPizzaOrder)
-                .orderResponseStatus(OrderResponseStatus.OK)
+        return PizzaOrderResponse.builder()
+                .pizzaOrder(new PizzaOrderDto(updatedPizzaOrder))
+                .responseStatus(AwesomePizzaResponseStatus.OK)
                 .build();
     }
 }

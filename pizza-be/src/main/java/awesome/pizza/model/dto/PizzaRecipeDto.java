@@ -3,11 +3,17 @@ package awesome.pizza.model.dto;
 import awesome.pizza.model.entities.PizzaRecipe;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
+import java.io.Serializable;
 
 
 @Data
-public class PizzaRecipeDto {
+@RequiredArgsConstructor
+@Builder
+public class PizzaRecipeDto implements Serializable {
 
     private final Long id;
 

@@ -1,6 +1,8 @@
 package awesome.pizza.model.entities;
 
+import awesome.pizza.service.OrderCodeProvider;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,9 +18,10 @@ public class PizzaOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence")
     @Column(name = "ID")
-    protected Long id;
+    private Long id;
 
     @Column(name = "CODE")
+    @Pattern(regexp = OrderCodeProvider.ORDER_CODE_REGEX, message = "Invalid code format")
     private String code;
 
     @Column(name = "ORDER_STATUS")

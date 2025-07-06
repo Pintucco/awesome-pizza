@@ -7,9 +7,11 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface IOrderRepository extends CrudRepository<PizzaOrder, Long> {
+public interface IPizzaOrderRepository extends CrudRepository<PizzaOrder, Long> {
 
     Optional<PizzaOrder> findByCode(String code);
 
     List<PizzaOrder> findByOrderStatus(OrderStatus orderStatus);
+
+
 }
