@@ -1,6 +1,6 @@
 package awesome.pizza.controller;
 
-import awesome.pizza.model.dto.NewOrderDto;
+import awesome.pizza.model.dto.NewPizzaOrderDto;
 import awesome.pizza.model.dto.PizzaOrderResponse;
 import awesome.pizza.service.OrdersService;
 import jakarta.validation.Valid;
@@ -24,7 +24,7 @@ public class OrdersController {
 
     @PostMapping(value = "/new", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public PizzaOrderResponse makeNewOrder(@NotNull @Valid @RequestBody NewOrderDto newOrderDto) {
-        return ordersService.makeNewOrder(newOrderDto);
+    public PizzaOrderResponse makeNewOrder(@NotNull @Valid @RequestBody NewPizzaOrderDto newPizzaOrderItemDto) {
+        return ordersService.makeNewOrder(newPizzaOrderItemDto);
     }
 }

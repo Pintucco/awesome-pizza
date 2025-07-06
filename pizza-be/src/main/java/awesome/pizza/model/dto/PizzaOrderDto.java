@@ -1,6 +1,5 @@
 package awesome.pizza.model.dto;
 
-import awesome.pizza.model.entities.DoughType;
 import awesome.pizza.model.entities.OrderStatus;
 import awesome.pizza.model.entities.PizzaOrder;
 import awesome.pizza.service.OrderCodeProvider;
@@ -11,6 +10,9 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -31,16 +33,13 @@ public class PizzaOrderDto implements Serializable {
 
     @NotNull
     @Builder.Default
-    private DoughType doughType = DoughType.STANDARD;
-
-    @NotNull
-    private PizzaRecipeDto pizzaRecipe;
+    private List<PizzaOrderItemDto> pizzaOrderItems = new ArrayList<>();
 
     public PizzaOrderDto(PizzaOrder pizzaOrder) {
         code = pizzaOrder.getCode();
         orderStatus = pizzaOrder.getOrderStatus();
         price = pizzaOrder.getPrice();
-        doughType = pizzaOrder.getDoughType();
-        pizzaRecipe = new PizzaRecipeDto(pizzaOrder.getPizzaRecipe());
+        pizzaOrderItems = pizzaOrder.getPizzaOrderItems().stream().map(PizzaOrderItemDto::new)
+                .collect(Collectors.toList());
     }
 }

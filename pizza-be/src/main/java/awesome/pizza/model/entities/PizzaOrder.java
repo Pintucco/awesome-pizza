@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "PIZZA_ORDER")
 @Getter
@@ -30,12 +33,7 @@ public class PizzaOrder {
     @Column(name = "PRICE")
     private Double price;
 
-    @Column(name = "DOUGH_TYPE")
-    @Enumerated(EnumType.STRING)
-    private DoughType doughType;
-
-    @JoinColumn(name = "PIZZA_RECIPE")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private PizzaRecipe pizzaRecipe;
+    @OneToMany(mappedBy = "orderId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<PizzaOrderItem> pizzaOrderItems = new ArrayList<>();
 
 }

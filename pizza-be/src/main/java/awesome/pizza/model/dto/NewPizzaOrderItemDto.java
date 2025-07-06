@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-public class NewOrderDto implements Serializable {
+public class NewPizzaOrderItemDto implements Serializable {
 
     @NotNull(message = "Pizza Recipe must be provided")
     private Long pizzaRecipeId;

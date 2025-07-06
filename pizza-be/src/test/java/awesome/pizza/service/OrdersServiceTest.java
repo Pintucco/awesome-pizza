@@ -1,15 +1,15 @@
 package awesome.pizza.service;
 
+import awesome.pizza.TestSamples;
 import awesome.pizza.config.AwesomePizzaException;
 import awesome.pizza.config.ErrorEnum;
 import awesome.pizza.model.dto.AwesomePizzaResponseStatus;
-import awesome.pizza.model.dto.NewOrderDto;
+import awesome.pizza.model.dto.NewPizzaOrderDto;
+import awesome.pizza.model.dto.NewPizzaOrderItemDto;
 import awesome.pizza.model.dto.PizzaOrderResponse;
-import awesome.pizza.model.dto.PizzaRecipeDto;
 import awesome.pizza.model.entities.DoughType;
 import awesome.pizza.model.entities.OrderStatus;
 import awesome.pizza.model.entities.PizzaOrder;
-import awesome.pizza.model.entities.PizzaRecipe;
 import awesome.pizza.repository.IPizzaOrderRepository;
 import awesome.pizza.repository.IPizzaRecipeRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -40,45 +40,47 @@ class OrdersServiceTest {
     @Test
     @DisplayName("Make new order successfully")
     void createOrder1() {
-        Long pizzaRecipeId=1L;
-        NewOrderDto newOrderDto = new NewOrderDto();
-        newOrderDto.setDoughType(DoughType.GLUTEN_FREE);
-        newOrderDto.setPizzaRecipeId(pizzaRecipeId);
 
-        PizzaRecipe recipe = new PizzaRecipe();
-        recipe.setId(pizzaRecipeId);
-        recipe.setDefaultPrice(7.0);
+        NewPizzaOrderItemDto newPizzaOrderItemDto1 = new NewPizzaOrderItemDto();
+        newPizzaOrderItemDto1.setDoughType(DoughType.GLUTEN_FREE);
+        newPizzaOrderItemDto1.setPizzaRecipeId(TestSamples.pizzaRecipeMargheritaSample().getId());
+
+        NewPizzaOrderItemDto newPizzaOrderItemDto2 = new NewPizzaOrderItemDto();
+        newPizzaOrderItemDto2.setDoughType(DoughType.STANDARD);
+        newPizzaOrderItemDto2.setPizzaRecipeId(TestSamples.pizzaRecipeMargheritaSample().getId());
+
+        NewPizzaOrderDto newPizzaOrderDto = new NewPizzaOrderDto();
+        newPizzaOrderDto.getPizzaOrderItems().add(newPizzaOrderItemDto1);
+        newPizzaOrderDto.getPizzaOrderItems().add(newPizzaOrderItemDto2);
 
         PizzaOrder savedOrder = new PizzaOrder();
         savedOrder.setCode("CODICE_ORDINE");
-        savedOrder.setPizzaRecipe(recipe);
         savedOrder.setOrderStatus(OrderStatus.SUBMITTED);
-        savedOrder.setDoughType(DoughType.GLUTEN_FREE);
         savedOrder.setPrice(7.0);
 
-        when(pizzaRecipeRepository.findById(pizzaRecipeId)).thenReturn(Optional.of(recipe));
+        when(pizzaRecipeRepository.findById(TestSamples.pizzaRecipeMargheritaSample().getId())).thenReturn(Optional.of(TestSamples.pizzaRecipeMargheritaSample()));
         when(pizzaOrderRepository.save(any(PizzaOrder.class))).thenReturn(savedOrder);
 
-        PizzaOrderResponse result = ordersService.makeNewOrder(newOrderDto);
+        PizzaOrderResponse result = ordersService.makeNewOrder(newPizzaOrderDto);
 
         assertEquals(AwesomePizzaResponseStatus.OK, result.getResponseStatus());
-        assertEquals(DoughType.GLUTEN_FREE, result.getPizzaOrder().getDoughType());
         assertEquals(OrderStatus.SUBMITTED, result.getPizzaOrder().getOrderStatus());
         assertEquals(7.0, result.getPizzaOrder().getPrice());
-        assertEquals(new PizzaRecipeDto(recipe), result.getPizzaOrder().getPizzaRecipe());
     }
 
     @Test
     @DisplayName("Make new order with dismissed pizza throws exception")
     void createOrder2() {
         Long pizzaRecipeId=1L;
-        NewOrderDto newOrderDto = new NewOrderDto();
-        newOrderDto.setPizzaRecipeId(pizzaRecipeId);
+        NewPizzaOrderItemDto newPizzaOrderItemDto = new NewPizzaOrderItemDto();
+        newPizzaOrderItemDto.setPizzaRecipeId(pizzaRecipeId);
+        NewPizzaOrderDto newPizzaOrderDto = new NewPizzaOrderDto();
+        newPizzaOrderDto.getPizzaOrderItems().add(newPizzaOrderItemDto);
 
         when(pizzaRecipeRepository.findById(pizzaRecipeId)).thenReturn(Optional.empty());
 
         AwesomePizzaException exception = assertThrows(AwesomePizzaException.class,
-                () -> ordersService.makeNewOrder(newOrderDto));
+                () -> ordersService.makeNewOrder(newPizzaOrderDto));
 
         assertEquals(ErrorEnum.PIZZA_RECIPE_NOT_FOUND.name(), exception.getCode());
     }
@@ -88,15 +90,9 @@ class OrdersServiceTest {
     void monitorOrder1() {
         String orderCode="AWSPZ-12345678";
 
-        PizzaRecipe recipe = new PizzaRecipe();
-        recipe.setId(1L);
-        recipe.setDefaultPrice(7.0);
-
         PizzaOrder savedOrder = new PizzaOrder();
         savedOrder.setCode(orderCode);
-        savedOrder.setPizzaRecipe(recipe);
         savedOrder.setOrderStatus(OrderStatus.SUBMITTED);
-        savedOrder.setDoughType(DoughType.GLUTEN_FREE);
         savedOrder.setPrice(7.0);
 
         when(pizzaOrderRepository.findByCode(any(String.class))).thenReturn(Optional.of(savedOrder));
@@ -104,10 +100,8 @@ class OrdersServiceTest {
         PizzaOrderResponse result = ordersService.getOrderStatus(orderCode);
 
         assertEquals(AwesomePizzaResponseStatus.OK, result.getResponseStatus());
-        assertEquals(DoughType.GLUTEN_FREE, result.getPizzaOrder().getDoughType());
         assertEquals(OrderStatus.SUBMITTED, result.getPizzaOrder().getOrderStatus());
         assertEquals(7.0, result.getPizzaOrder().getPrice());
-        assertEquals(new PizzaRecipeDto(recipe), result.getPizzaOrder().getPizzaRecipe());
     }
 
     @Test
