@@ -26,7 +26,7 @@ public class PizzaRecipeService {
     public PizzaRecipeDto newPizzaRecipe(PizzaRecipeDto pizzaRecipeDto) {
         PizzaRecipe pizzaRecipe = new PizzaRecipe();
         pizzaRecipe.setName(pizzaRecipeDto.getName());
-        pizzaRecipe.setDescription(pizzaRecipe.getDescription());
+        pizzaRecipe.setDescription(pizzaRecipeDto.getDescription());
         pizzaRecipe.setDefaultPrice(pizzaRecipeDto.getDefaultPrice());
         PizzaRecipe savedPizza = pizzaRecipeRepository.save(pizzaRecipe);
         return new PizzaRecipeDto(savedPizza);

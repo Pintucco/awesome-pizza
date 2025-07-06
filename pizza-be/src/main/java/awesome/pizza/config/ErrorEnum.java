@@ -12,7 +12,8 @@ public enum ErrorEnum {
     INVALID_REQUEST("Invalid request"),
     ORDER_NOT_FOUND("Order not found"),
     PIZZA_RECIPE_NOT_FOUND("Pizza recipe not found"),
-    ALREADY_PROCESSED_ORDER("Already processed order");
+    ALREADY_PROCESSED_ORDER("Already processed order"),
+    INVALID_ORDER_STATUS_FOR_CONCLUSION("Only orders in progress can be closed");
 
     private final String message;
 

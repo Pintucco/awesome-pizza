@@ -9,9 +9,9 @@ public enum ApiEndpoint {
 
     ORDERS("orders",false),
     RESTAURANT("restaurant", true),
-    RECIPES("recipes", true);
+    LOOKUP("lookup", true);
 
-    private final String path;
+    public final String path;
     private final boolean secured;
 
 }

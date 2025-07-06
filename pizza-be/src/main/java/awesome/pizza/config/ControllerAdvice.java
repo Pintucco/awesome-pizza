@@ -97,13 +97,13 @@ public class ControllerAdvice {
         return new ResponseEntity<>(new ErrorResponse(exception), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(Exception.class)
+/*    @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGenericException(Exception exception) {
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setErrorCode(ErrorEnum.INTERNAL_ERROR.name());
         errorResponse.setErrorMessage(ErrorEnum.INTERNAL_ERROR.getMessage());
         errorResponse.setDetailedMessage(exception.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+    }*/
 
 }
