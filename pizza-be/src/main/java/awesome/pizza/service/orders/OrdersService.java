@@ -1,4 +1,4 @@
-package awesome.pizza.service;
+package awesome.pizza.service.orders;
 
 import awesome.pizza.config.AwesomePizzaException;
 import awesome.pizza.config.ErrorEnum;

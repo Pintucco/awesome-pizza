@@ -1,6 +1,6 @@
 package awesome.pizza.model.entities;
 
-import awesome.pizza.service.OrderCodeProvider;
+import awesome.pizza.service.orders.OrderCodeProvider;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
@@ -28,6 +28,7 @@ public class PizzaOrder {
     private String code;
 
     @Column(name = "ORDER_STATUS")
+    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
     @Column(name = "PRICE")

@@ -1,5 +1,10 @@
 package awesome.pizza.config;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public enum ErrorEnum {
 
     INTERNAL_ERROR("Internal error"),
@@ -9,18 +14,6 @@ public enum ErrorEnum {
     PIZZA_RECIPE_NOT_FOUND("Pizza recipe not found"),
     ALREADY_PROCESSED_ORDER("Already processed order");
 
-    private String message;
+    private final String message;
 
-
-    ErrorEnum(String message) {
-        this.setMessage(message);
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    private void setMessage(String message) {
-        this.message = message;
-    }
 }

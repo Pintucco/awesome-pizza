@@ -2,7 +2,7 @@ package awesome.pizza.model.dto;
 
 import awesome.pizza.model.entities.OrderStatus;
 import awesome.pizza.model.entities.PizzaOrder;
-import awesome.pizza.service.OrderCodeProvider;
+import awesome.pizza.service.orders.OrderCodeProvider;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -19,6 +19,8 @@ import java.util.stream.Collectors;
 @Builder
 public class PizzaOrderDto implements Serializable {
 
+    @NotNull
+    private Long id;
 
     @Pattern(regexp = OrderCodeProvider.ORDER_CODE_REGEX, message = "Invalid code format")
     @NotNull
@@ -36,6 +38,7 @@ public class PizzaOrderDto implements Serializable {
     private List<PizzaOrderItemDto> pizzaOrderItems = new ArrayList<>();
 
     public PizzaOrderDto(PizzaOrder pizzaOrder) {
+        id = pizzaOrder.getId();
         code = pizzaOrder.getCode();
         orderStatus = pizzaOrder.getOrderStatus();
         price = pizzaOrder.getPrice();

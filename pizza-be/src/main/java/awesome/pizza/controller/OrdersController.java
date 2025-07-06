@@ -2,7 +2,7 @@ package awesome.pizza.controller;
 
 import awesome.pizza.model.dto.NewPizzaOrderDto;
 import awesome.pizza.model.dto.PizzaOrderResponse;
-import awesome.pizza.service.OrdersService;
+import awesome.pizza.service.orders.OrdersService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;

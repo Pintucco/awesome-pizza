@@ -1,4 +1,4 @@
-package awesome.pizza.service;
+package awesome.pizza.service.restaurant;
 
 import awesome.pizza.model.dto.PizzaRecipeDto;
 import awesome.pizza.model.entities.PizzaRecipe;

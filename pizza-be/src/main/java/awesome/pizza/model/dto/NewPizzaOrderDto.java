@@ -10,6 +10,6 @@ import java.util.List;
 @Data
 public class NewPizzaOrderDto implements Serializable {
 
-    @NotEmpty
+    @NotEmpty(message ="At least a pizza must be ordered")
     private List<NewPizzaOrderItemDto> pizzaOrderItems = new ArrayList<>();
 }

@@ -1,5 +1,6 @@
 package awesome.pizza.service;
 
+import awesome.pizza.service.orders.OrderCodeProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

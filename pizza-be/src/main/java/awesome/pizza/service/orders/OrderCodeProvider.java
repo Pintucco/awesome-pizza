@@ -1,4 +1,4 @@
-package awesome.pizza.service;
+package awesome.pizza.service.orders;
 
 import lombok.experimental.UtilityClass;
 

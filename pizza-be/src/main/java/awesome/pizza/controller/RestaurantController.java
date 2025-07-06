@@ -3,7 +3,7 @@ package awesome.pizza.controller;
 import awesome.pizza.model.dto.AwesomePizzaResponseStatus;
 import awesome.pizza.model.dto.PizzaOrderDto;
 import awesome.pizza.model.dto.PizzaOrderResponse;
-import awesome.pizza.service.RestaurantService;
+import awesome.pizza.service.restaurant.RestaurantService;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,7 @@
 package awesome.pizza.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 @Slf4j
@@ -50,6 +53,17 @@ public class ControllerAdvice {
         errorResponse.setDetailedMessage(exception.getRootCause() != null
                 ? exception.getRootCause().getMessage()
                 : exception.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HandlerMethodValidationException.class)
+    public ResponseEntity<ErrorResponse> handle(HandlerMethodValidationException exception) {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setErrorCode(ErrorEnum.INVALID_REQUEST.name());
+        errorResponse.setErrorMessage(ErrorEnum.INVALID_REQUEST.getMessage());
+        String detailedMessage = exception.getAllValidationResults().stream().flatMap(result->result.getResolvableErrors().stream())
+                        .map(MessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(","));
+        errorResponse.setDetailedMessage(detailedMessage);
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 

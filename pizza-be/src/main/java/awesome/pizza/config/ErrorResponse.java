@@ -11,9 +11,10 @@ public class ErrorResponse {
     private String errorMessage;
     private String detailedMessage;
 
-    public ErrorResponse(AwesomePizzaException awesomePizzaException){
-        this.errorCode=awesomePizzaException.getCode();
-        this.errorMessage=awesomePizzaException.getMessage();
+    public ErrorResponse(AwesomePizzaException awesomePizzaException) {
+        this.errorCode = awesomePizzaException.getCode();
+        this.errorMessage = awesomePizzaException.getCustomMessage();
+        this.detailedMessage = awesomePizzaException.getCustomMessage();
     }
 
 }

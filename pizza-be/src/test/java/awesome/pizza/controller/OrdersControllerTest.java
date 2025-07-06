@@ -4,7 +4,7 @@ import awesome.pizza.TestSamples;
 import awesome.pizza.model.dto.*;
 import awesome.pizza.model.entities.DoughType;
 import awesome.pizza.model.entities.OrderStatus;
-import awesome.pizza.service.OrdersService;
+import awesome.pizza.service.orders.OrdersService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
