@@ -1,5 +1,6 @@
 package awesome.pizza.controller;
 
+import awesome.pizza.TestSamples;
 import awesome.pizza.model.dto.*;
 import awesome.pizza.model.entities.DoughType;
 import awesome.pizza.model.entities.OrderStatus;
@@ -43,7 +44,7 @@ class OrdersControllerTest {
         PizzaOrderDto pizzaOrderDto = PizzaOrderDto.builder()
                 .code(orderCode)
                 .price(11.0)
-                .pizzaRecipe(pizzaRecipeSample())
+                .pizzaRecipe(new PizzaRecipeDto(TestSamples.pizzaRecipeMargheritaSample()))
                 .build();
         PizzaOrderResponse pizzaOrderResponse = PizzaOrderResponse.builder()
                 .responseStatus(AwesomePizzaResponseStatus.OK)
@@ -97,7 +98,7 @@ class OrdersControllerTest {
         PizzaOrderDto cratedOrder = PizzaOrderDto.builder()
                 .code(orderCode)
                 .price(7.0)
-                .pizzaRecipe(pizzaRecipeSample())
+                .pizzaRecipe(new PizzaRecipeDto(TestSamples.pizzaRecipeMargheritaSample()))
                 .orderStatus(OrderStatus.SUBMITTED)
                 .build();
 
@@ -134,13 +135,5 @@ class OrdersControllerTest {
         verifyNoInteractions(ordersService);
     }
 
-    private PizzaRecipeDto pizzaRecipeSample() {
 
-        return PizzaRecipeDto.builder()
-                .id(1L)
-                .defaultPrice(5.0)
-                .description("Pomodoro, mozzarella, origano")
-                .name("Margherita")
-                .build();
-    }
 }
