@@ -18,8 +18,9 @@ public class PizzaOrderItem {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "ORDER_ID")
-    private Long orderId;
+    @JoinColumn(name = "ORDER_ID", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private PizzaOrder pizzaOrder;
 
     @Column(name = "PRICE")
     private Double price;

@@ -33,7 +33,7 @@ public class PizzaOrder {
     @Column(name = "PRICE")
     private Double price;
 
-    @OneToMany(mappedBy = "orderId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "pizzaOrder", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<PizzaOrderItem> pizzaOrderItems = new ArrayList<>();
 
 }
