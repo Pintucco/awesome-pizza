@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+
+  # Databases
+  pizza-db:
+    image: "postgres:14.4"
+    container_name: "pizza-db"
+    ports:
+      - 5432:5432
+
+    environment:
+      - POSTGRES_USER=awesome-pizza-db
+      - POSTGRES_PASSWORD=awesome-pizza-db-pw
+    volumes:
+      - ./db-init/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  # Back-End applications
+  pizza-be:
+    depends_on:
+      - awesome-pizza-db
+    image: "ghcr.io/pintucco/awesome-pizza/pizza-be"
+    container_name: "pizza-be"
+    ports:
+      - 8067:8067
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://pizza-db:5432/awesome_pizza_db
+

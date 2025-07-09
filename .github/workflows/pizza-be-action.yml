@@ -1,5 +1,5 @@
 
-name: Commit Stage Ebay Service Application
+name: Build image for pizza-be
 
 on:
   push:
