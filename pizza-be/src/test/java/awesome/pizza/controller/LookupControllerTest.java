@@ -42,8 +42,8 @@ class LookupControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/lookup/all-available-pizzas")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.pizzaRecipes").isArray())
-                .andExpect(jsonPath("$.pizzaRecipes[0].name").value("Margherita"))
-                .andExpect(jsonPath("$.pizzaRecipes[1].name").value("Marinara"));
+                .andExpect(jsonPath("$.pizzaRecipesList").isArray())
+                .andExpect(jsonPath("$.pizzaRecipesList[0].name").value("Margherita"))
+                .andExpect(jsonPath("$.pizzaRecipesList[1].name").value("Marinara"));
     }
 }
