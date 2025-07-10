@@ -1,8 +1,8 @@
 package awesome.pizza.controller;
 
-import awesome.pizza.TestSamples;
 import awesome.pizza.model.dto.PizzaRecipeDto;
 import awesome.pizza.service.restaurant.PizzaRecipeService;
+import awesome.pizza.utils.TestSamples;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

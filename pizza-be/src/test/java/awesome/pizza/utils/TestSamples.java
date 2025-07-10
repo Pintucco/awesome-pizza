@@ -1,4 +1,4 @@
-package awesome.pizza;
+package awesome.pizza.utils;
 
 import awesome.pizza.model.dto.PizzaOrderDto;
 import awesome.pizza.model.dto.PizzaOrderItemDto;

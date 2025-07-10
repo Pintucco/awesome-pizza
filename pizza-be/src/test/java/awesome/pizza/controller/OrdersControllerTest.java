@@ -1,10 +1,10 @@
 package awesome.pizza.controller;
 
-import awesome.pizza.TestSamples;
 import awesome.pizza.model.dto.*;
 import awesome.pizza.model.entities.DoughType;
 import awesome.pizza.model.entities.OrderStatus;
 import awesome.pizza.service.orders.OrdersService;
+import awesome.pizza.utils.TestSamples;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

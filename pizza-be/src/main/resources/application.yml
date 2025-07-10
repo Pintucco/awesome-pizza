@@ -5,6 +5,8 @@ server:
 spring:
   application:
     name: pizza
+  jackson:
+    time-zone: UTC
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/awesome-pizza-db

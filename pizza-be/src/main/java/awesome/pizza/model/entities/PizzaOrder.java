@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,5 +37,19 @@ public class PizzaOrder {
 
     @OneToMany(mappedBy = "pizzaOrder", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<PizzaOrderItem> pizzaOrderItems = new ArrayList<>();
+
+    @Column(name = "SUBMITTED_AT")
+    private Instant submittedAt;
+
+    @Column(name = "ACCEPTED_REFUSED_AT")
+    private Instant acceptedRefusedAt;
+
+    @Column(name = "CONCLUDED_AT")
+    private Instant concludedAt;
+
+
+    @JoinColumn(name = "WORKED_BY")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private AwesomePizzaUser workedBy;
 
 }

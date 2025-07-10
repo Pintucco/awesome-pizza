@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,6 +38,16 @@ public class PizzaOrderDto implements Serializable {
     @Builder.Default
     private List<PizzaOrderItemDto> pizzaOrderItems = new ArrayList<>();
 
+
+    private Instant submittedAt;
+
+    private Instant acceptedRefusedAt;
+
+    private Instant concludedAt;
+
+    private String workedBy;
+
+
     public PizzaOrderDto(PizzaOrder pizzaOrder) {
         id = pizzaOrder.getId();
         code = pizzaOrder.getCode();
@@ -44,5 +55,8 @@ public class PizzaOrderDto implements Serializable {
         price = pizzaOrder.getPrice();
         pizzaOrderItems = pizzaOrder.getPizzaOrderItems().stream().map(PizzaOrderItemDto::new)
                 .collect(Collectors.toList());
+        submittedAt = pizzaOrder.getSubmittedAt();
+        acceptedRefusedAt = pizzaOrder.getAcceptedRefusedAt();
+        workedBy = pizzaOrder.getWorkedBy() != null ? pizzaOrder.getWorkedBy().getUsername() : null;
     }
 }

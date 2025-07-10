@@ -1,3 +1,12 @@
+create sequence  seq_awesome_pizza_user start with 1 increment by 1;
+
+create table  awesome_pizza_user (
+id bigint not null,
+username varchar(255) NOT NULL,
+password varchar(255) NOT NULL,
+primary key (id)
+);
+
 create sequence  seq_pizza_recipe start with 1 increment by 1;
 
 create table  pizza_recipe (
@@ -15,6 +24,10 @@ id bigint not null,
 code varchar(255) NOT NULL UNIQUE,
 order_status varchar(255) NOT NULL,
 price double precision NOT NULL,
+submitted_at timestamp with time zone null,
+accepted_refused_at  timestamp with time zone null,
+concluded_at timestamp with time zone null,
+worked_by bigint null references awesome_pizza_user(id),
 primary key (id)
 );
 
@@ -31,12 +44,5 @@ primary key (id)
 );
 
 
-create sequence  seq_awesome_pizza_user start with 1 increment by 1;
 
-create table  awesome_pizza_user (
-id bigint not null,
-username varchar(255) NOT NULL,
-password varchar(255) NOT NULL,
-primary key (id)
-);
 

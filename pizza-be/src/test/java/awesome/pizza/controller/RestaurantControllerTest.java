@@ -1,6 +1,5 @@
 package awesome.pizza.controller;
 
-import awesome.pizza.TestSamples;
 import awesome.pizza.model.dto.AwesomePizzaResponseStatus;
 import awesome.pizza.model.dto.PizzaOrderDto;
 import awesome.pizza.model.dto.PizzaOrderResponse;
@@ -8,6 +7,7 @@ import awesome.pizza.model.dto.PizzaRecipeDto;
 import awesome.pizza.model.entities.OrderStatus;
 import awesome.pizza.service.restaurant.PizzaRecipeService;
 import awesome.pizza.service.restaurant.RestaurantService;
+import awesome.pizza.utils.TestSamples;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

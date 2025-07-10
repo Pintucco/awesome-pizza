@@ -11,7 +11,6 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
@@ -23,8 +22,7 @@ import java.util.stream.Collectors;
 public class ControllerAdvice {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public  ResponseEntity<ErrorResponse> handleInvalidPayloadException(MethodArgumentNotValidException methodArgumentNotValidException) {
+    public ResponseEntity<ErrorResponse> handle(MethodArgumentNotValidException methodArgumentNotValidException) {
         StringBuilder errorBuilder = new StringBuilder();
         List<ObjectError> allValidationErrors = methodArgumentNotValidException.getBindingResult().getAllErrors();
         for (ObjectError validationError : allValidationErrors) {
@@ -61,8 +59,8 @@ public class ControllerAdvice {
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setErrorCode(ErrorEnum.INVALID_REQUEST.name());
         errorResponse.setErrorMessage(ErrorEnum.INVALID_REQUEST.getMessage());
-        String detailedMessage = exception.getAllValidationResults().stream().flatMap(result->result.getResolvableErrors().stream())
-                        .map(MessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(","));
+        String detailedMessage = exception.getAllValidationResults().stream().flatMap(result -> result.getResolvableErrors().stream())
+                .map(MessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(","));
         errorResponse.setDetailedMessage(detailedMessage);
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
@@ -76,7 +74,6 @@ public class ControllerAdvice {
         errorResponse.setDetailedMessage("Missing required parameter: " + exception.getParameterName());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
-
 
 
     @ExceptionHandler(DataIntegrityViolationException.class)
@@ -97,13 +94,13 @@ public class ControllerAdvice {
         return new ResponseEntity<>(new ErrorResponse(exception), HttpStatus.BAD_REQUEST);
     }
 
-/*    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGenericException(Exception exception) {
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setErrorCode(ErrorEnum.INTERNAL_ERROR.name());
         errorResponse.setErrorMessage(ErrorEnum.INTERNAL_ERROR.getMessage());
         errorResponse.setDetailedMessage(exception.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-    }*/
+    }
 
 }

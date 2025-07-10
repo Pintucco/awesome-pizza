@@ -1,10 +1,10 @@
 package awesome.pizza.service;
 
-import awesome.pizza.TestSamples;
 import awesome.pizza.model.dto.PizzaRecipeDto;
 import awesome.pizza.model.entities.PizzaRecipe;
 import awesome.pizza.repository.IPizzaRecipeRepository;
 import awesome.pizza.service.restaurant.PizzaRecipeService;
+import awesome.pizza.utils.TestSamples;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -36,6 +36,7 @@ class OrderFlowIntegrationTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+
     @Test
     void monitorOrderWithInvalidCode() throws Exception {
         String orderCode = "hello";

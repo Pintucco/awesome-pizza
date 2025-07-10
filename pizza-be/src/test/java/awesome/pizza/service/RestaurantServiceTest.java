@@ -4,10 +4,12 @@ import awesome.pizza.config.AwesomePizzaException;
 import awesome.pizza.config.ErrorEnum;
 import awesome.pizza.model.dto.PizzaOrderDto;
 import awesome.pizza.model.dto.PizzaOrderResponse;
+import awesome.pizza.model.entities.AwesomePizzaUser;
 import awesome.pizza.model.entities.OrderStatus;
 import awesome.pizza.model.entities.PizzaOrder;
 import awesome.pizza.repository.IPizzaOrderRepository;
 import awesome.pizza.service.restaurant.RestaurantService;
+import awesome.pizza.service.security.AuthenticationFacade;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,12 +29,20 @@ class RestaurantServiceTest {
     @Mock
     private IPizzaOrderRepository orderRepository;
 
+    @Mock
+    private AuthenticationFacade authenticationFacade;
+
     @InjectMocks
     private RestaurantService restaurantService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        AwesomePizzaUser mockLoggedUser = new AwesomePizzaUser();
+        mockLoggedUser.setId(1L);
+        mockLoggedUser.setUsername("mario");
+        mockLoggedUser.setPassword("pizza");
+        when(authenticationFacade.getLoggedUser()).thenReturn(mockLoggedUser);
     }
 
     @Test

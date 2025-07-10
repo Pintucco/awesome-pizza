@@ -8,10 +8,12 @@ import awesome.pizza.model.dto.PizzaOrderResponse;
 import awesome.pizza.model.entities.OrderStatus;
 import awesome.pizza.model.entities.PizzaOrder;
 import awesome.pizza.repository.IPizzaOrderRepository;
+import awesome.pizza.service.security.AuthenticationFacade;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +23,7 @@ import java.util.Optional;
 @Transactional
 public class RestaurantService {
 
+    private final AuthenticationFacade authenticationFacade;
     private final IPizzaOrderRepository orderRepository;
 
     public Optional<PizzaOrderDto> getNextOrder() {
@@ -43,6 +46,8 @@ public class RestaurantService {
             throw new AwesomePizzaException(ErrorEnum.ALREADY_PROCESSED_ORDER);
         }
         pizzaOrder.setOrderStatus(OrderStatus.PIZZA_IN_PROGRESS);
+        pizzaOrder.setAcceptedRefusedAt(Instant.now());
+        pizzaOrder.setWorkedBy(authenticationFacade.getLoggedUser());
         PizzaOrder updatedPizzaOrder = orderRepository.save(pizzaOrder);
         return PizzaOrderResponse.builder()
                 .pizzaOrder(new PizzaOrderDto(updatedPizzaOrder))
@@ -57,6 +62,8 @@ public class RestaurantService {
             throw new AwesomePizzaException(ErrorEnum.ALREADY_PROCESSED_ORDER);
         }
         pizzaOrder.setOrderStatus(OrderStatus.REFUSED);
+        pizzaOrder.setAcceptedRefusedAt(Instant.now());
+        pizzaOrder.setWorkedBy(authenticationFacade.getLoggedUser());
         PizzaOrder updatedPizzaOrder = orderRepository.save(pizzaOrder);
         return PizzaOrderResponse.builder()
                 .pizzaOrder(new PizzaOrderDto(updatedPizzaOrder))
@@ -71,6 +78,7 @@ public class RestaurantService {
             throw new AwesomePizzaException(ErrorEnum.INVALID_ORDER_STATUS_FOR_CONCLUSION);
         }
         pizzaOrder.setOrderStatus(OrderStatus.CONCLUDED);
+        pizzaOrder.setConcludedAt(Instant.now());
         PizzaOrder updatedPizzaOrder = orderRepository.save(pizzaOrder);
         return PizzaOrderResponse.builder()
                 .pizzaOrder(new PizzaOrderDto(updatedPizzaOrder))

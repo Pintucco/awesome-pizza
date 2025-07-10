@@ -1,6 +1,5 @@
 package awesome.pizza.service;
 
-import awesome.pizza.TestSamples;
 import awesome.pizza.config.AwesomePizzaException;
 import awesome.pizza.config.ErrorEnum;
 import awesome.pizza.model.dto.AwesomePizzaResponseStatus;
@@ -13,6 +12,7 @@ import awesome.pizza.model.entities.PizzaOrder;
 import awesome.pizza.repository.IPizzaOrderRepository;
 import awesome.pizza.repository.IPizzaRecipeRepository;
 import awesome.pizza.service.orders.OrdersService;
+import awesome.pizza.utils.TestSamples;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

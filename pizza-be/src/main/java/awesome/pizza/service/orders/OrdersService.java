@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.Optional;
 
 @Service
@@ -43,6 +44,7 @@ public class OrdersService {
         String orderCode = OrderCodeProvider.generateOrderCode();
         PizzaOrder pizzaOrder = new PizzaOrder();
         pizzaOrder.setCode(orderCode);
+        pizzaOrder.setSubmittedAt(Instant.now());
         pizzaOrder.setOrderStatus(OrderStatus.SUBMITTED);
         for (NewPizzaOrderItemDto newPizzaOrderItemDto : newPizzaOrderDto.getPizzaOrderItems()) {
             PizzaRecipe pizzaRecipe = pizzaRecipeRepository.findById(newPizzaOrderItemDto.getPizzaRecipeId())
